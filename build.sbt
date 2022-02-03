@@ -1,4 +1,4 @@
-name:="rediscala-demo"
+name := "rediscala-demo"
 
 scalacOptions += "-deprecation"
 

@@ -27,4 +27,4 @@ jobs:
         java-version: ${{matrix.java}}
         distribution: adopt
     - uses: coursier/cache-action@v6
-    - run: sbt "SetScala${{ matrix.scala }}" Test/compile
+    - run: sbt scalafmtSbtCheck "SetScala${{ matrix.scala }}" scalafmtCheckAll Test/compile

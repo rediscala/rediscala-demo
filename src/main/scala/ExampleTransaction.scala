@@ -25,8 +25,8 @@ object ExampleTransaction extends App {
     assert(g == Some(ByteString("abcValue")))
     println("ok : get(\"key\") == \"abcValue\"")
   }
-  decr.failed.foreach{
-    error => println(s"decr failed : $error")
+  decr.failed.foreach { error =>
+    println(s"decr failed : $error")
   }
   Await.result(r, 10.seconds)
 

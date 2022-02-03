@@ -1,6 +1,7 @@
 import akka.actor.ActorSystem
 import redis.RedisClient
-import scala.concurrent.{Future, Await}
+import scala.concurrent.Future
+import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 

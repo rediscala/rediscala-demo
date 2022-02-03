@@ -2,7 +2,8 @@ import akka.actor.ActorSystem
 import akka.actor.Props
 import java.net.InetSocketAddress
 import redis.actors.RedisSubscriberActor
-import redis.api.pubsub.{PMessage, Message}
+import redis.api.pubsub.PMessage
+import redis.api.pubsub.Message
 import redis.RedisClient
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -23,12 +24,12 @@ object ExamplePubSub extends App {
 }
 
 class SubscribeActor(channels: Seq[String] = Nil, patterns: Seq[String] = Nil)
-  extends RedisSubscriberActor(
-    new InetSocketAddress("localhost", 6379),
-    channels,
-    patterns,
-    onConnectStatus = connected => { println(s"connected: $connected")}
-  ) {
+    extends RedisSubscriberActor(
+      new InetSocketAddress("localhost", 6379),
+      channels,
+      patterns,
+      onConnectStatus = connected => { println(s"connected: $connected") }
+    ) {
 
   def onMessage(message: Message) = {
     println(s" message received: $message")

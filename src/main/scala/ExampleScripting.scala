@@ -1,6 +1,7 @@
 import akka.actor.ActorSystem
 import redis.api.scripting.RedisScript
-import redis.protocol.{Bulk, MultiBulk}
+import redis.protocol.Bulk
+import redis.protocol.MultiBulk
 import redis.RedisClient
 import scala.concurrent.duration._
 import scala.concurrent.Await
