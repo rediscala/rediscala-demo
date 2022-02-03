@@ -34,31 +34,33 @@ object PrefixedKey {
     }
 }
 
-object ExampleByteStringFormatter extends App {
-  implicit val akkaSystem: ActorSystem = ActorSystem()
+object ExampleByteStringFormatter {
+  def main(args: Array[String]): Unit = {
+    implicit val akkaSystem: ActorSystem = ActorSystem()
 
-  val redis = RedisClient()
+    val redis = RedisClient()
 
-  val dumb = DumbClass("s1", "s2")
+    val dumb = DumbClass("s1", "s2")
 
-  val r = for {
-    set <- redis.set("dumbKey", dumb)
-    getDumbOpt <- redis.get[DumbClass]("dumbKey")
-  } yield {
-    getDumbOpt.map(getDumb => {
-      assert(getDumb == dumb)
-      println(getDumb)
-    })
+    val r = for {
+      set <- redis.set("dumbKey", dumb)
+      getDumbOpt <- redis.get[DumbClass]("dumbKey")
+    } yield {
+      getDumbOpt.map(getDumb => {
+        assert(getDumb == dumb)
+        println(getDumb)
+      })
+    }
+
+    Await.result(r, 5.seconds)
+
+    val prefixedKey = PrefixedKey("prefix", ByteString("1"))
+
+    val exists = redis.send(Exists(prefixedKey))
+
+    val bool = Await.result(exists, 5.seconds)
+    assert(!bool)
+
+    Await.result(akkaSystem.terminate(), 20.seconds)
   }
-
-  Await.result(r, 5.seconds)
-
-  val prefixedKey = PrefixedKey("prefix", ByteString("1"))
-
-  val exists = redis.send(Exists(prefixedKey))
-
-  val bool = Await.result(exists, 5.seconds)
-  assert(!bool)
-
-  Await.result(akkaSystem.terminate(), 20.seconds)
 }
