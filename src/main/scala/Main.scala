@@ -1,10 +1,11 @@
+import akka.actor.ActorSystem
 import redis.RedisClient
 import scala.concurrent.{Future, Await}
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object Main extends App {
-  implicit val akkaSystem = akka.actor.ActorSystem()
+  implicit val akkaSystem: ActorSystem = ActorSystem()
 
   val redis = RedisClient()
 
@@ -13,13 +14,13 @@ object Main extends App {
   futurePong.map(pong => {
     println(s"Redis replied with a $pong")
   })
-  Await.result(futurePong, 5 seconds)
+  Await.result(futurePong, 5.seconds)
 
   val futureResult = doSomething(redis)
 
-  Await.result(futureResult, 5 seconds)
+  Await.result(futureResult, 5.seconds)
 
-  akkaSystem.shutdown()
+  Await.result(akkaSystem.terminate(), 20.seconds)
 
   def doSomething(redis: RedisClient): Future[Boolean] = {
     // launch command set and del in parallel
@@ -40,7 +41,7 @@ object Main extends App {
       val ibefore = iBefore.map(_.utf8String)
       val iafter = iAfter.map(_.utf8String)
       println(s"i was $ibefore, now is $iafter")
-      iafter == "20"
+      iafter == Option("20")
     }
   }
 }

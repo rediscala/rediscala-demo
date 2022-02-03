@@ -1,3 +1,4 @@
+import akka.actor.ActorSystem
 import redis.api.scripting.RedisScript
 import redis.protocol.{Bulk, MultiBulk}
 import redis.RedisClient
@@ -6,7 +7,7 @@ import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object ExampleScripting extends App {
-  implicit val akkaSystem = akka.actor.ActorSystem()
+  implicit val akkaSystem: ActorSystem = ActorSystem()
 
   val redis = RedisClient()
 
@@ -39,7 +40,7 @@ object ExampleScripting extends App {
       case _ => println("MultiBulk reply expected!")
     }
   }
-  Await.result(r, 5 seconds)
+  Await.result(r, 5.seconds)
 
-  akkaSystem.shutdown()
+  Await.result(akkaSystem.terminate(), 20.seconds)
 }

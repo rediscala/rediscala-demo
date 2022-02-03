@@ -1,10 +1,11 @@
+import akka.actor.ActorSystem
 import redis.{RedisBlockingClient, RedisClient}
 import scala.concurrent.{Future, Await}
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object ExampleRediscalaBlocking extends App {
-  implicit val akkaSystem = akka.actor.ActorSystem()
+  implicit val akkaSystem: ActorSystem = ActorSystem()
 
   val redis = RedisClient()
 
@@ -15,8 +16,8 @@ object ExampleRediscalaBlocking extends App {
     publisher()
   })
 
-  Await.result(r, 15 seconds)
-  akkaSystem.shutdown()
+  Await.result(r, 15.seconds)
+  Await.result(akkaSystem.terminate(), 20.seconds)
 
 
   def publisher() = {
@@ -29,13 +30,13 @@ object ExampleRediscalaBlocking extends App {
     val waitWork = 3
     val sequenceFuture = for {i <- 0 to waitWork}
     yield {
-      redisBlocking.blpop(Seq("workList", "otherKeyWithWork"), 5 seconds).map(result => {
+      redisBlocking.blpop(Seq("workList", "otherKeyWithWork"), 5.seconds).map(result => {
         result.map({
           case (key, work) => println(s"list $key has work : ${work.utf8String}")
         })
       })
     }
 
-    Await.result(Future.sequence(sequenceFuture), 10 seconds)
+    Await.result(Future.sequence(sequenceFuture), 10.seconds)
   }
 }

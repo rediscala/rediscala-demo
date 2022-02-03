@@ -1,3 +1,4 @@
+import akka.actor.ActorSystem
 import akka.util.ByteString
 import redis.RedisClient
 import scala.concurrent.Await
@@ -5,7 +6,7 @@ import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object ExampleTransaction extends App {
-  implicit val akkaSystem = akka.actor.ActorSystem()
+  implicit val akkaSystem: ActorSystem = ActorSystem()
 
   val redis = RedisClient()
 
@@ -24,10 +25,10 @@ object ExampleTransaction extends App {
     assert(g == Some(ByteString("abcValue")))
     println("ok : get(\"key\") == \"abcValue\"")
   }
-  decr.onFailure({
-    case error => println(s"decr failed : $error")
-  })
-  Await.result(r, 10 seconds)
+  decr.failed.foreach{
+    error => println(s"decr failed : $error")
+  }
+  Await.result(r, 10.seconds)
 
-  akkaSystem.shutdown()
+  Await.result(akkaSystem.terminate(), 20.seconds)
 }

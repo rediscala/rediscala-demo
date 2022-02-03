@@ -1,3 +1,4 @@
+import akka.actor.ActorSystem
 import akka.actor.Props
 import java.net.InetSocketAddress
 import redis.actors.RedisSubscriberActor
@@ -7,13 +8,13 @@ import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object ExamplePubSub extends App {
-  implicit val akkaSystem = akka.actor.ActorSystem()
+  implicit val akkaSystem: ActorSystem = ActorSystem()
 
   val redis = RedisClient()
 
-  akkaSystem.scheduler.schedule(2 seconds, 2 seconds)(redis.publish("time", System.currentTimeMillis()))
-  akkaSystem.scheduler.schedule(2 seconds, 5 seconds)(redis.publish("pattern.match", "pattern value"))
-  akkaSystem.scheduler.scheduleOnce(20 seconds)(akkaSystem.shutdown())
+  akkaSystem.scheduler.schedule(2.seconds, 2.seconds)(redis.publish("time", System.currentTimeMillis()))
+  akkaSystem.scheduler.schedule(2.seconds, 5.seconds)(redis.publish("pattern.match", "pattern value"))
+  akkaSystem.scheduler.scheduleOnce(20.seconds)(akkaSystem.terminate())
 
   val channels = Seq("time")
   val patterns = Seq("pattern.*")
@@ -29,11 +30,11 @@ class SubscribeActor(channels: Seq[String] = Nil, patterns: Seq[String] = Nil)
     onConnectStatus = connected => { println(s"connected: $connected")}
   ) {
 
-  def onMessage(message: Message) {
+  def onMessage(message: Message) = {
     println(s" message received: $message")
   }
 
-  def onPMessage(pmessage: PMessage) {
+  def onPMessage(pmessage: PMessage) = {
     println(s"pattern message received: $pmessage")
   }
 }
