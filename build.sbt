@@ -4,7 +4,7 @@ scalacOptions += "-deprecation"
 
 run / fork := true
 
-def Scala212 = "2.12.15"
+def Scala212 = "2.12.16"
 def Scala213 = "2.13.8"
 def Scala3 = "3.1.2"
 
