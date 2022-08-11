@@ -38,3 +38,10 @@ jobs:
     - uses: coursier/cache-action@v6
     - run: sbt scalafmtSbtCheck "+ scalafmtCheckAll" "+ Test/compile"
     - run: sbt "runMain ${{ matrix.class }}"
+  finish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    needs:
+      - test
+    steps:
+    - run: echo finish
