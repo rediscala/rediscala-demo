@@ -35,7 +35,6 @@ jobs:
       with:
         java-version: ${{matrix.java}}
         distribution: adopt
-    - uses: coursier/cache-action@v6
     - run: sbt scalafmtSbtCheck "+ scalafmtCheckAll" "+ Test/compile"
     - run: sbt "runMain ${{ matrix.class }}"
   finish:
