@@ -6,7 +6,7 @@ run / fork := true
 
 def Scala212 = "2.12.17"
 def Scala213 = "2.13.10"
-def Scala3 = "3.2.1"
+def Scala3 = "3.2.2"
 
 scalaVersion := Scala213
 
