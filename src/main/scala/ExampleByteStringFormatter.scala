@@ -36,7 +36,7 @@ object PrefixedKey {
 
 object ExampleByteStringFormatter {
   def main(args: Array[String]): Unit = {
-    implicit val akkaSystem: ActorSystem = ActorSystem()
+    implicit val actorSystem: ActorSystem = ActorSystem()
 
     val redis = RedisClient()
 
@@ -61,6 +61,6 @@ object ExampleByteStringFormatter {
     val bool = Await.result(exists, 5.seconds)
     assert(!bool)
 
-    Await.result(akkaSystem.terminate(), 20.seconds)
+    Await.result(actorSystem.terminate(), 20.seconds)
   }
 }

@@ -10,17 +10,17 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object ExamplePubSub {
   def main(args: Array[String]): Unit = {
-    implicit val akkaSystem: ActorSystem = ActorSystem()
+    implicit val actorSystem: ActorSystem = ActorSystem()
 
     val redis = RedisClient()
 
-    akkaSystem.scheduler.schedule(2.seconds, 2.seconds)(redis.publish("time", System.currentTimeMillis()))
-    akkaSystem.scheduler.schedule(2.seconds, 5.seconds)(redis.publish("pattern.match", "pattern value"))
-    akkaSystem.scheduler.scheduleOnce(20.seconds)(akkaSystem.terminate())
+    actorSystem.scheduler.schedule(2.seconds, 2.seconds)(redis.publish("time", System.currentTimeMillis()))
+    actorSystem.scheduler.schedule(2.seconds, 5.seconds)(redis.publish("pattern.match", "pattern value"))
+    actorSystem.scheduler.scheduleOnce(20.seconds)(actorSystem.terminate())
 
     val channels = Seq("time")
     val patterns = Seq("pattern.*")
-    akkaSystem.actorOf(Props(classOf[SubscribeActor], channels, patterns).withDispatcher("rediscala.rediscala-client-worker-dispatcher"))
+    actorSystem.actorOf(Props(classOf[SubscribeActor], channels, patterns).withDispatcher("rediscala.rediscala-client-worker-dispatcher"))
 
   }
 }

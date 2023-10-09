@@ -7,7 +7,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object ExampleTransaction {
   def main(args: Array[String]): Unit = {
-    implicit val akkaSystem: ActorSystem = ActorSystem()
+    implicit val actorSystem: ActorSystem = ActorSystem()
 
     val redis = RedisClient()
 
@@ -31,6 +31,6 @@ object ExampleTransaction {
     }
     Await.result(r, 10.seconds)
 
-    Await.result(akkaSystem.terminate(), 20.seconds)
+    Await.result(actorSystem.terminate(), 20.seconds)
   }
 }
