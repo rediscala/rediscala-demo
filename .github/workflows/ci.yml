@@ -21,7 +21,7 @@ jobs:
       matrix:
         java:
           - 8
-          - 17
+          - 21
         class:
           - ExampleByteStringFormatter
           - ExamplePubSub
