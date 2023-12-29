@@ -2,6 +2,17 @@ name := "rediscala-demo"
 
 scalacOptions += "-deprecation"
 
+scalacOptions ++= {
+  scalaBinaryVersion.value match {
+    case "3" =>
+      Nil
+    case _ =>
+      Seq(
+        "-Xsource:3",
+      )
+  }
+}
+
 run / fork := true
 
 def Scala212 = "2.12.18"
