@@ -1,4 +1,4 @@
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import redis.api.scripting.RedisScript
 import redis.protocol.Bulk
 import redis.protocol.MultiBulk

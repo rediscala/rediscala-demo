@@ -24,7 +24,7 @@ scalaVersion := Scala213
 crossScalaVersions := Seq(Scala212, Scala213, Scala3)
 
 libraryDependencies ++= Seq(
-  "io.github.rediscala" %% "rediscala" % "1.14.0-akka"
+  "io.github.rediscala" %% "rediscala" % "1.14.0-pekko"
 )
 
 TaskKey[Unit]("runAllMain") := {

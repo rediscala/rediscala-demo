@@ -1,5 +1,5 @@
-import akka.actor.ActorSystem
-import akka.util.ByteString
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.util.ByteString
 import redis.RedisClient
 import scala.concurrent.Await
 import scala.concurrent.duration._

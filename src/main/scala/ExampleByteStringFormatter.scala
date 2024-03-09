@@ -1,5 +1,5 @@
-import akka.util.ByteString
-import akka.actor.ActorSystem
+import org.apache.pekko.util.ByteString
+import org.apache.pekko.actor.ActorSystem
 import redis.api.keys.Exists
 import redis.ByteStringSerializer
 import redis.RedisClient
