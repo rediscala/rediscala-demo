@@ -1,4 +1,4 @@
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import redis.RedisClient
 import scala.concurrent.Future
 import scala.concurrent.Await
