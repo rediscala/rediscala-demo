@@ -16,7 +16,7 @@ scalacOptions ++= {
 run / fork := true
 
 def Scala212 = "2.12.20"
-def Scala213 = "2.13.15"
+def Scala213 = "2.13.16"
 def Scala3 = "3.6.2"
 
 scalaVersion := Scala213
