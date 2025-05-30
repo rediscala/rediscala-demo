@@ -15,13 +15,12 @@ scalacOptions ++= {
 
 run / fork := true
 
-def Scala212 = "2.12.20"
 def Scala213 = "2.13.16"
 def Scala3 = "3.7.0"
 
 scalaVersion := Scala213
 
-crossScalaVersions := Seq(Scala212, Scala213, Scala3)
+crossScalaVersions := Seq(Scala213, Scala3)
 
 libraryDependencies ++= Seq(
   "io.github.rediscala" %% "rediscala" % "1.17.0"
