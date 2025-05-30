@@ -3,13 +3,13 @@ import redis.api.scripting.RedisScript
 import redis.protocol.Bulk
 import redis.protocol.MultiBulk
 import redis.RedisClient
-import scala.concurrent.duration._
+import scala.concurrent.duration.*
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object ExampleScripting {
   def main(args: Array[String]): Unit = {
-    implicit val actorSystem: ActorSystem = ActorSystem()
+    given actorSystem: ActorSystem = ActorSystem()
 
     val redis = RedisClient()
 

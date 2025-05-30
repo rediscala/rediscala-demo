@@ -5,12 +5,12 @@ import redis.actors.RedisSubscriberActor
 import redis.api.pubsub.PMessage
 import redis.api.pubsub.Message
 import redis.RedisClient
-import scala.concurrent.duration._
+import scala.concurrent.duration.*
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object ExamplePubSub {
   def main(args: Array[String]): Unit = {
-    implicit val actorSystem: ActorSystem = ActorSystem()
+    given actorSystem: ActorSystem = ActorSystem()
 
     val redis = RedisClient()
 

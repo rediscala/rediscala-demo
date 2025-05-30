@@ -5,13 +5,13 @@ import redis.ByteStringSerializer
 import redis.RedisClient
 import redis.ByteStringFormatter
 import scala.concurrent.Await
-import scala.concurrent.duration._
+import scala.concurrent.duration.*
 import scala.concurrent.ExecutionContext.Implicits.global
 
 case class DumbClass(s1: String, s2: String)
 
 object DumbClass {
-  implicit val byteStringFormatter: ByteStringFormatter[DumbClass] = new ByteStringFormatter[DumbClass] {
+  given ByteStringFormatter[DumbClass] = new ByteStringFormatter[DumbClass] {
     def serialize(data: DumbClass): ByteString = {
       ByteString(data.s1 + "|" + data.s2)
     }
@@ -26,7 +26,7 @@ object DumbClass {
 case class PrefixedKey[K: ByteStringSerializer](prefix: String, key: K)
 
 object PrefixedKey {
-  implicit def serializer[K](implicit redisKey: ByteStringSerializer[K]): ByteStringSerializer[PrefixedKey[K]] =
+  given [K](using redisKey: ByteStringSerializer[K]): ByteStringSerializer[PrefixedKey[K]] =
     new ByteStringSerializer[PrefixedKey[K]] {
       def serialize(data: PrefixedKey[K]): ByteString = {
         ByteString(data.prefix + redisKey.serialize(data.key))
@@ -36,7 +36,7 @@ object PrefixedKey {
 
 object ExampleByteStringFormatter {
   def main(args: Array[String]): Unit = {
-    implicit val actorSystem: ActorSystem = ActorSystem()
+    given actorSystem: ActorSystem = ActorSystem()
 
     val redis = RedisClient()
 
