@@ -2,12 +2,12 @@ import org.apache.pekko.actor.ActorSystem
 import org.apache.pekko.util.ByteString
 import redis.RedisClient
 import scala.concurrent.Await
-import scala.concurrent.duration._
+import scala.concurrent.duration.*
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object ExampleTransaction {
   def main(args: Array[String]): Unit = {
-    implicit val actorSystem: ActorSystem = ActorSystem()
+    given actorSystem: ActorSystem = ActorSystem()
 
     val redis = RedisClient()
 
