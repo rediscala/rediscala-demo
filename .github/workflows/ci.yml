@@ -20,8 +20,8 @@ jobs:
       fail-fast: false
       matrix:
         java:
-          - 8
-          - 21
+          - 17
+          - 25
         class:
           - ExampleByteStringFormatter
           - ExamplePubSub
