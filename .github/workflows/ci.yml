@@ -36,8 +36,8 @@ jobs:
         java-version: ${{matrix.java}}
         distribution: adopt
     - uses: sbt/setup-sbt@v1
-    - run: sbt scalafmtSbtCheck "+ scalafmtCheckAll" "+ Test/compile"
-    - run: sbt "runMain ${{ matrix.class }}"
+    - run: sbt --server scalafmtSbtCheck "+ scalafmtCheckAll" "+ Test/compile"
+    - run: sbt --server "runMain ${{ matrix.class }}"
   finish:
     runs-on: ubuntu-latest
     timeout-minutes: 2
