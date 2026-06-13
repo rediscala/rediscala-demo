@@ -7,7 +7,7 @@ run / fork := true
 scalaVersion := "3.8.4"
 
 libraryDependencies ++= Seq(
-  "io.github.rediscala" %% "rediscala" % "2.0.2"
+  "io.github.rediscala" %% "rediscala" % "2.1.0"
 )
 
 TaskKey[Unit]("runAllMain") := Def.uncached {
