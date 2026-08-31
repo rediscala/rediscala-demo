@@ -34,7 +34,7 @@ jobs:
     - uses: actions/setup-java@v5
       with:
         java-version: ${{matrix.java}}
-        distribution: adopt
+        distribution: temurin
     - uses: sbt/setup-sbt@v1
     - run: sbt --server scalafmtSbtCheck "+ scalafmtCheckAll" "+ Test/compile"
     - run: sbt --server "runMain ${{ matrix.class }}"
