@@ -4,7 +4,7 @@ scalacOptions += "-deprecation"
 
 run / fork := true
 
-scalaVersion := "3.8.4"
+scalaVersion := "3.9.0"
 
 libraryDependencies ++= Seq(
   "io.github.rediscala" %% "rediscala" % "2.1.0"
