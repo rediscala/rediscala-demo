@@ -14,8 +14,8 @@ object ExamplePubSub {
 
     val redis = RedisClient()
 
-    actorSystem.scheduler.schedule(2.seconds, 2.seconds)(redis.publish("time", System.currentTimeMillis()))
-    actorSystem.scheduler.schedule(2.seconds, 5.seconds)(redis.publish("pattern.match", "pattern value"))
+    actorSystem.scheduler.scheduleWithFixedDelay(2.seconds, 2.seconds)(() => redis.publish("time", System.currentTimeMillis()))
+    actorSystem.scheduler.scheduleWithFixedDelay(2.seconds, 5.seconds)(() => redis.publish("pattern.match", "pattern value"))
     actorSystem.scheduler.scheduleOnce(20.seconds)(actorSystem.terminate())
 
     val channels = Seq("time")
